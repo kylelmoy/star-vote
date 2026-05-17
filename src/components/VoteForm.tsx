@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
-  Column, Row, Input, Button, Card, Heading, Text, Feedback, SmartLink, Media, Line,
+  Column, Row, Input, Button, Card, Heading, Text, Feedback, SmartLink, Line,
 } from "@once-ui-system/core";
 import { castVote } from "@/lib/dbAccess";
 import { StarRating } from "@/components/StarRating";
@@ -83,44 +83,49 @@ export function VoteForm({ ballot, existingVote }: VoteFormProps) {
           </Column>
 
           {ballot.candidates.map((candidate) => (
-            <Card key={candidate.candidateId} padding="m">
-              <Column gap="m">
-                <Row gap="m" vertical="start">
-                  {candidate.imageUrl && (
-                    <Media
-                      src={candidate.imageUrl}
-                      alt={candidate.name}
-                      aspectRatio="1/1"
-                      height={80}
-                      style={{ borderRadius: "var(--radius-m)", flexShrink: 0 }}
-                    />
+            <Column key={candidate.candidateId} gap="m"
+              border="neutral-alpha-weak" radius="m" padding="m" fillWidth>
+              <Row gap="m" vertical="center">
+                {candidate.imageUrl && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={candidate.imageUrl}
+                    alt={candidate.name}
+                    style={{
+                      width: 80,
+                      height: 112,
+                      objectFit: "cover",
+                      borderRadius: "var(--radius-m)",
+                      flexShrink: 0,
+                      display: "block",
+                    }}
+                  />
+                )}
+                <Column gap="4" style={{ flex: 1, minWidth: 0 }}>
+                  <Text variant="heading-strong-m" style={{ wordBreak: "break-word" }}>
+                    {candidate.name}
+                  </Text>
+                  {candidate.description && (
+                    <Text variant="body-default-s" onBackground="neutral-weak">
+                      {candidate.description}
+                    </Text>
                   )}
-                  <Column gap="4" flex={1}>
-                    <Row gap="s" vertical="center">
-                      <Heading variant="heading-strong-m">{candidate.name}</Heading>
-                      {candidate.linkUrl && (
-                        <SmartLink href={candidate.linkUrl} target="_blank">
-                          <Text variant="label-default-s" onBackground="brand-medium">
-                            Visit ↗
-                          </Text>
-                        </SmartLink>
-                      )}
-                    </Row>
-                    {candidate.description && (
-                      <Text variant="body-default-s" onBackground="neutral-weak">
-                        {candidate.description}
+                  {candidate.linkUrl && (
+                    <SmartLink href={candidate.linkUrl} target="_blank">
+                      <Text variant="label-default-s" onBackground="brand-medium">
+                        Visit ↗
                       </Text>
-                    )}
-                  </Column>
-                </Row>
+                    </SmartLink>
+                  )}
+                </Column>
+              </Row>
 
-                <StarRating
-                  value={scores[candidate.candidateId] ?? 0}
-                  onChange={(score) => setScore(candidate.candidateId, score)}
-                  disabled={isPending}
-                />
-              </Column>
-            </Card>
+              <StarRating
+                value={scores[candidate.candidateId] ?? 0}
+                onChange={(score) => setScore(candidate.candidateId, score)}
+                disabled={isPending}
+              />
+            </Column>
           ))}
         </Column>
 

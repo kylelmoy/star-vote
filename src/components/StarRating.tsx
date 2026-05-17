@@ -11,8 +11,6 @@ const SCORE_BUTTONS = [
   { value: "5", label: "5" },
 ];
 
-const SCORE_LABELS = ["No opinion", "Poor", "Fair", "Good", "Great", "Excellent"];
-
 interface StarRatingProps {
   value: number;
   onChange: (score: number) => void;
@@ -21,7 +19,7 @@ interface StarRatingProps {
 
 export function StarRating({ value, onChange, disabled }: StarRatingProps) {
   return (
-    <Column gap="4">
+    <Column gap="4" fillWidth>
       <Row gap="8" vertical="center">
         <SegmentedControl
           buttons={SCORE_BUTTONS}
@@ -29,9 +27,6 @@ export function StarRating({ value, onChange, disabled }: StarRatingProps) {
           onToggle={(v) => !disabled && onChange(Number(v))}
           style={disabled ? { pointerEvents: "none", opacity: 0.6 } : undefined}
         />
-        <Text variant="label-default-s" onBackground="neutral-weak" style={{ minWidth: 70 }}>
-          {SCORE_LABELS[value]}
-        </Text>
       </Row>
     </Column>
   );

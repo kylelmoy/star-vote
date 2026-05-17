@@ -8,12 +8,12 @@ export default async function SharePage({ params }: { params: Promise<{ code: st
   const ballot = await getBallot(code);
   if (!ballot) notFound();
 
-  const voteUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/vote/${ballot.ballotId}`;
+  const voteUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? "https://star-vote.kylelmoy.com"}/vote/${ballot.ballotId}`;
   const resultsUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/results/${ballot.ballotId}`;
 
   return (
     <Column fillWidth minHeight="100vh" horizontal="center" padding="l" paddingTop="xl">
-      <Column maxWidth="s" gap="xl" fillWidth>
+      <Column maxWidth="s" gap="m" fillWidth>
         <Column gap="s">
           <Heading variant="heading-strong-xl">Ballot created!</Heading>
           <Text variant="body-default-m" onBackground="neutral-weak">
@@ -21,7 +21,7 @@ export default async function SharePage({ params }: { params: Promise<{ code: st
           </Text>
         </Column>
 
-        <Card padding="m">
+        <Card padding="m" fillWidth>
           <Column gap="m">
             <Column gap="4">
               <Text variant="label-strong-s" onBackground="neutral-medium">Voting link</Text>
@@ -35,14 +35,14 @@ export default async function SharePage({ params }: { params: Promise<{ code: st
                 onBackground="neutral-strong"
                 style={{ flex: 1, wordBreak: "break-all" }}
               >
-                /vote/{ballot.ballotId}
+                https://star-vote.kylelmoy.com/vote/{ballot.ballotId}
               </Text>
               <CopyButton text={voteUrl} />
             </Row>
           </Column>
         </Card>
 
-        <Card padding="m">
+        <Card padding="m" fillWidth>
           <Column gap="m">
             <Column gap="4">
               <Text variant="label-strong-s" onBackground="neutral-medium">Results link</Text>
@@ -56,7 +56,7 @@ export default async function SharePage({ params }: { params: Promise<{ code: st
                 onBackground="neutral-strong"
                 style={{ flex: 1, wordBreak: "break-all" }}
               >
-                /results/{ballot.ballotId}
+                https://star-vote.kylelmoy.com/results/{ballot.ballotId}
               </Text>
               <CopyButton text={resultsUrl} />
             </Row>

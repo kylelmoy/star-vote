@@ -51,7 +51,7 @@ export default function Home() {
           </Card>
         </Row>
 
-        <Button href="/create" size="l" arrowIcon>
+        <Button id="create-button" href="/create" size="l" arrowIcon>
           Create a ballot
         </Button>
       </Column>
