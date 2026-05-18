@@ -2,14 +2,15 @@ import { notFound } from "next/navigation";
 import { Column, Heading, Text, Button, Row, Card } from "@once-ui-system/core";
 import { getBallot } from "@/lib/dbAccess";
 import { CopyButton } from "@/components/CopyButton";
+import { baseURL } from "@/resources/seo";
 
 export default async function SharePage({ params }: { params: Promise<{ code: string }> }) {
   const { code } = await params;
   const ballot = await getBallot(code);
   if (!ballot) notFound();
 
-  const voteUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? "https://star-vote.kylelmoy.com"}/vote/${ballot.ballotId}`;
-  const resultsUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/results/${ballot.ballotId}`;
+  const voteUrl = `${baseURL}/vote/${ballot.ballotId}`;
+  const resultsUrl = `${baseURL}/results/${ballot.ballotId}`;
 
   return (
     <Column fillWidth minHeight="100vh" horizontal="center" padding="l" paddingTop="xl">
@@ -35,7 +36,7 @@ export default async function SharePage({ params }: { params: Promise<{ code: st
                 onBackground="neutral-strong"
                 style={{ flex: 1, wordBreak: "break-all" }}
               >
-                https://star-vote.kylelmoy.com/vote/{ballot.ballotId}
+                {baseURL}/vote/{ballot.ballotId}
               </Text>
               <CopyButton text={voteUrl} />
             </Row>
@@ -56,7 +57,7 @@ export default async function SharePage({ params }: { params: Promise<{ code: st
                 onBackground="neutral-strong"
                 style={{ flex: 1, wordBreak: "break-all" }}
               >
-                https://star-vote.kylelmoy.com/results/{ballot.ballotId}
+                {baseURL}/results/{ballot.ballotId}
               </Text>
               <CopyButton text={resultsUrl} />
             </Row>
