@@ -1,15 +1,15 @@
 "use client";
 
 import { Column, Row, Text, SegmentedControl } from "@once-ui-system/core";
+import styles from "./StarRating.module.css";
 
-const SCORE_BUTTONS = [
-  { value: "0", label: "0" },
-  { value: "1", label: "1" },
-  { value: "2", label: "2" },
-  { value: "3", label: "3" },
-  { value: "4", label: "4" },
-  { value: "5", label: "5" },
-];
+const SCORE_BUTTONS = [0, 1, 2, 3, 4, 5].map((score) => ({
+  value: String(score),
+  label: String(score),
+  // ToggleButton renders a bare <button>, which defaults to type="submit".
+  // Inside VoteForm's <form> that makes picking a score submit the vote.
+  type: "button" as const,
+}));
 
 interface StarRatingProps {
   value: number;
@@ -25,6 +25,7 @@ export function StarRating({ value, onChange, disabled }: StarRatingProps) {
           buttons={SCORE_BUTTONS}
           selected={String(value)}
           onToggle={(v) => !disabled && onChange(Number(v))}
+          className={styles.scoreButton}
           style={disabled ? { pointerEvents: "none", opacity: 0.6 } : undefined}
         />
       </Row>

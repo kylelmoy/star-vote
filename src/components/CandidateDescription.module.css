@@ -1,0 +1,17 @@
+/* A text link rather than a button: no padding, so it sits flush with the
+   left edge of the paragraph above it. */
+.toggle {
+  align-self: flex-start;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: var(--font-size-body-xs);
+  color: var(--neutral-on-background-weak);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.toggle:hover {
+  color: var(--neutral-on-background-medium);
+}

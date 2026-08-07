@@ -1,0 +1,37 @@
+.candidateImage {
+  display: block;
+  flex-shrink: 0;
+  width: 80px;
+  height: 112px;
+  object-fit: cover;
+  border-radius: var(--radius-m);
+}
+
+/* Collapsed on desktop so it doesn't claim a gap from the surrounding Column. */
+.submitSpacer {
+  display: none;
+}
+
+/* Matches Once UI's `s` breakpoint, where the card stacks into a column. */
+@media (max-width: 768px) {
+  .candidateImage {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
+
+  /* Doubled class to outrank Button's own size class (`.m`, 40px tall). */
+  .submitButton.submitButton {
+    height: var(--static-space-56);
+    min-height: var(--static-space-56);
+  }
+
+  .submitButton.submitButton > * {
+    font-size: var(--font-size-body-l);
+  }
+
+  .submitSpacer {
+    display: block;
+    height: 30vh;
+  }
+}

@@ -1,0 +1,19 @@
+/*
+ * SegmentedControl forwards `className` to each ToggleButton, so this targets
+ * the individual score buttons. The doubled class raises specificity above
+ * ToggleButton's own size class (`.m`, 32px tall), whose stylesheet order
+ * relative to this module isn't guaranteed.
+ */
+
+/* Matches Once UI's `s` breakpoint, used elsewhere on the voting card. */
+@media (max-width: 768px) {
+  .scoreButton.scoreButton {
+    height: var(--static-space-48);
+    min-height: var(--static-space-48);
+    padding: var(--static-space-8) var(--static-space-4);
+  }
+
+  .scoreButton.scoreButton > * {
+    font-size: var(--font-size-body-l);
+  }
+}

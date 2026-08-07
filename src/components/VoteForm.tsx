@@ -7,7 +7,9 @@ import {
 } from "@once-ui-system/core";
 import { castVote } from "@/lib/dbAccess";
 import { StarRating } from "@/components/StarRating";
+import { CandidateDescription } from "@/components/CandidateDescription";
 import type { Ballot, Vote } from "@/lib/dbTypes";
+import styles from "./VoteForm.module.css";
 
 interface VoteFormProps {
   ballot: Ballot;
@@ -85,37 +87,33 @@ export function VoteForm({ ballot, existingVote }: VoteFormProps) {
           {ballot.candidates.map((candidate) => (
             <Column key={candidate.candidateId} gap="m"
               border="neutral-alpha-weak" radius="m" padding="m" fillWidth>
-              <Row gap="m" vertical="center">
+              <Row gap="m" vertical="center"
+                s={{ direction: "column", horizontal: "stretch", vertical: "start" }}>
                 {candidate.imageUrl && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={candidate.imageUrl}
                     alt={candidate.name}
-                    style={{
-                      width: 80,
-                      height: 112,
-                      objectFit: "cover",
-                      borderRadius: "var(--radius-m)",
-                      flexShrink: 0,
-                      display: "block",
-                    }}
+                    className={styles.candidateImage}
                   />
                 )}
                 <Column gap="4" style={{ flex: 1, minWidth: 0 }}>
-                  <Text variant="heading-strong-m" style={{ wordBreak: "break-word" }}>
-                    {candidate.name}
-                  </Text>
-                  {candidate.description && (
-                    <Text variant="body-default-s" onBackground="neutral-weak">
-                      {candidate.description}
+                  <Row gap="m" vertical="center" horizontal="between" fillWidth>
+                    <Text variant="heading-strong-m"
+                      style={{ flex: 1, minWidth: 0, wordBreak: "break-word" }}>
+                      {candidate.name}
                     </Text>
-                  )}
-                  {candidate.linkUrl && (
-                    <SmartLink href={candidate.linkUrl} target="_blank">
-                      <Text variant="label-default-s" onBackground="brand-medium">
-                        Visit ↗
-                      </Text>
-                    </SmartLink>
+                    {candidate.linkUrl && (
+                      <SmartLink href={candidate.linkUrl} target="_blank"
+                        style={{ flexShrink: 0 }}>
+                        <Text variant="label-default-s" onBackground="brand-medium">
+                          Visit ↗
+                        </Text>
+                      </SmartLink>
+                    )}
+                  </Row>
+                  {candidate.description && (
+                    <CandidateDescription description={candidate.description} />
                   )}
                 </Column>
               </Row>
@@ -133,11 +131,15 @@ export function VoteForm({ ballot, existingVote }: VoteFormProps) {
           <Feedback variant="danger" title="Error" description={error} icon />
         )}
 
-        <Button type="submit" fillWidth loading={isPending} disabled={isPending}>
+        <Button type="submit" fillWidth loading={isPending} disabled={isPending}
+          className={styles.submitButton}>
           {isPending
             ? existingVote ? "Updating vote…" : "Submitting vote…"
             : existingVote ? "Update vote" : "Submit vote"}
         </Button>
+
+        {/* Scroll cushion, so the submit button can be swiped up into thumb reach. */}
+        <div aria-hidden className={styles.submitSpacer} />
       </Column>
     </form>
   );
