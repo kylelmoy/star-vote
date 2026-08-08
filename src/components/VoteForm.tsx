@@ -105,10 +105,9 @@ export function VoteForm({ ballot, existingVote }: VoteFormProps) {
                     </Text>
                     {candidate.linkUrl && (
                       <SmartLink href={candidate.linkUrl} target="_blank"
-                        style={{ flexShrink: 0 }}>
-                        <Text variant="label-default-s" onBackground="brand-medium">
-                          Visit ↗
-                        </Text>
+                        suffixIcon="externalLink"
+                        style={{ flexShrink: 0, color: "var(--brand-on-background-medium)" }}>
+                        <Text variant="label-default-s">Visit</Text>
                       </SmartLink>
                     )}
                   </Row>
